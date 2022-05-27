@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Libraries
@@ -25,20 +29,20 @@ namespace Libraries
 
             if (!File.Exists(ConfigPath))
             {
-                File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(Activator.CreateInstance(typeof(T)), Formatting.Indented));
+                File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(Activator.CreateInstance(typeof(T)), Newtonsoft.Json.Formatting.Indented));
             }
 
             InternalConfig = JsonConvert.DeserializeObject<T>(File.ReadAllText(ConfigPath));
 
             var timer = new System.Timers.Timer(1000);
 
-            var ConfigCache = JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(InternalConfig));
+            var ConfigCache = JsonConvert.SerializeObject(InternalConfig);
 
             timer.Elapsed += (sender, args) =>
             {
-                if (!InternalConfig.DoesInstanceMatch(ConfigCache))
+                if (JsonConvert.SerializeObject(InternalConfig) != ConfigCache)
                 {
-                    ConfigCache = JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(InternalConfig));
+                    ConfigCache = JsonConvert.SerializeObject(InternalConfig);
 
                     SaveConfig();
 
@@ -50,17 +54,23 @@ namespace Libraries
             timer.Start();
         }
 
-        private string ConfigPath { get; }
+        private string ConfigPath
+        {
+            get;
+        }
 
-        public T InternalConfig { get; private set; }
+        public T InternalConfig
+        {
+            get; private set;
+        }
 
         public event Action OnConfigUpdated;
 
-        private async void UpdateConfig(object obj, FileSystemEventArgs args)
+        private void UpdateConfig(object obj, FileSystemEventArgs args)
         {
             try
             {
-                var UpdatedConfig = JsonConvert.DeserializeObject<T>(await FileUtils.SafelyReadAllText(ConfigPath));
+                var UpdatedConfig = JsonConvert.DeserializeObject<T>(File.ReadAllText(ConfigPath));
 
                 if (UpdatedConfig != null)
                 {
@@ -80,13 +90,12 @@ namespace Libraries
             }
             catch
             {
-                //MessageBox.Show(ex.ToString());
             }
         }
 
-        public async void SaveConfig()
+        public void SaveConfig()
         {
-            await FileUtils.SafelyWriteAllText(ConfigPath, JsonConvert.SerializeObject(InternalConfig, Formatting.Indented));
+            File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(InternalConfig, Newtonsoft.Json.Formatting.Indented));
         }
     }
 

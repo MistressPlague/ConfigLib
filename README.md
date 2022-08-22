@@ -8,4 +8,12 @@ public class YourClass
 {
   public bool thing { get; set; } = false;
 }
+
+public void Read()
+{
+  if (Config.InternalConfig.thing)
+  {
+    
+  }
+}
 ```

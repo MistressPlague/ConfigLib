@@ -8,7 +8,7 @@ namespace Libraries
     {
         private string ConfigCache;
 
-        public ConfigLib(string configPath)
+        public ConfigLib(string configPath, int RefreshInterval = 1000)
         {
             ConfigPath = configPath;
 
@@ -32,7 +32,7 @@ namespace Libraries
 
             InternalConfig = JsonConvert.DeserializeObject<T>(File.ReadAllText(ConfigPath));
 
-            var timer = new System.Timers.Timer(1000);
+            var timer = new System.Timers.Timer(RefreshInterval);
 
             ConfigCache = JsonConvert.SerializeObject(InternalConfig);
 

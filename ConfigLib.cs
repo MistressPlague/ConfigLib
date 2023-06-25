@@ -36,7 +36,7 @@ namespace Libraries
 
             ConfigCache = JsonConvert.SerializeObject(InternalConfig);
 
-            timer.Elapsed += (_, _) =>
+            timer.Elapsed += (sender, e) =>
             {
                 if (JsonConvert.SerializeObject(InternalConfig, Formatting.Indented) != ConfigCache)
                 {

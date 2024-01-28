@@ -13,7 +13,7 @@ public void Read()
 {
   if (Config.InternalConfig.thing)
   {
-    
+    Config.InternalConfig.thing = false; // auto saves after small delay if changes are detected
   }
 }
 ```

@@ -34,7 +34,7 @@ namespace Libraries
 
             var timer = new System.Timers.Timer(RefreshInterval);
 
-            ConfigCache = JsonConvert.SerializeObject(InternalConfig);
+            ConfigCache = JsonConvert.SerializeObject(InternalConfig, Formatting.Indented);
 
             timer.Elapsed += (sender, e) =>
             {

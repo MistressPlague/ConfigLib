@@ -1,5 +1,9 @@
 # ConfigLib
 A Lazy-Use Config With Automatic Loading And Saving. Use Is Close To How It Would Be Without A Config.
+
+# Install with NuGet
+https://www.nuget.org/packages/Kanna.ConfigLib/
+
 # Example Usage
 ```csharp
 public ConfigLib<YourClass> Config = new ConfigLib<YourClass>("PathToWhereYouWantItSaved.json");

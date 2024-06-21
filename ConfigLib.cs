@@ -1,8 +1,12 @@
 using System;
 using System.IO;
+using System.Xml;
+
 using Newtonsoft.Json;
 
-namespace Libraries
+using Formatting = Newtonsoft.Json.Formatting;
+
+namespace Kanna
 {
     public class ConfigLib<T> where T : class
     {
@@ -84,7 +88,7 @@ namespace Libraries
 
         public void SaveConfig()
         {
-            File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(InternalConfig,  Formatting.Indented));
+            File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(InternalConfig, Formatting.Indented));
         }
     }
 }

@@ -2,7 +2,7 @@
 A Lazy-Use Config With Automatic Loading And Saving. Use Is Close To How It Would Be Without A Config.
 
 # Install with NuGet
-https://www.nuget.org/packages/Kanna.ConfigLib/
+https://www.nuget.org/packages/Kannya.ConfigLib/
 
 # Example Usage
 ```csharp
